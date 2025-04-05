@@ -3,6 +3,24 @@
 
 u32 sdl_to_config_map[MAX_CONTROLS] =
 {
+#ifdef _MIYOO_
+	SDLK_UP,
+	SDLK_DOWN,
+	SDLK_LEFT,
+	SDLK_RIGHT,
+	SDLK_LALT,
+	SDLK_LCTRL,
+	SDLK_LSHIFT,
+	SDLK_SPACE,
+	SDLK_TAB,
+	SDLK_BACKSPACE,
+	SDLK_RETURN,
+	SDLK_ESCAPE,
+	SDLK_PAGEUP,
+	SDLK_PAGEDOWN,
+	SDLK_RALT,
+	SDLK_RSHIFT
+#else
 	SDLK_UP,
 	SDLK_DOWN,
 	SDLK_LEFT,
@@ -19,6 +37,7 @@ u32 sdl_to_config_map[MAX_CONTROLS] =
 	SDLK_PAGEDOWN,
 	SDLK_KP_DIVIDE,
 	SDLK_KP_PERIOD
+#endif
 };
 
 u32 key_map(u32 keys)
@@ -245,6 +264,9 @@ u32 update_input(event_input_struct *event_input)
 			#ifdef _RG99_
 			case SDLK_PAGEUP:
 			#endif
+      #ifdef _MIYOO_
+			case SDLK_RCTRL:
+      #endif
 				event_input->action_type = INPUT_ACTION_TYPE_PRESS;
 				event_input->config_button_action = CONFIG_BUTTON_MENU;
 				return 1;
@@ -334,7 +356,11 @@ gui_action_type key_map_gui_action(u32 key)
 {
   switch(key)
   {
+#ifdef _MIYOO_
+    case SDLK_LCTRL:
+#else
     case SDLK_ESCAPE:
+#endif
       return CURSOR_EXIT;
 
     case SDLK_DOWN:
@@ -350,10 +376,18 @@ gui_action_type key_map_gui_action(u32 key)
       return CURSOR_RIGHT;
 
     case SDLK_RETURN:
+#ifdef _MIYOO_
+    case SDLK_LALT:
+#else
     case SDLK_LCTRL:
+#endif
       return CURSOR_SELECT;
 
+#ifdef _MIYOO_
+    case SDLK_ESCAPE:
+#else
     case SDLK_LALT:
+#endif
       return CURSOR_BACK;
 
     case SDLK_PAGEUP:

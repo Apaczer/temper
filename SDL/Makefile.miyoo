@@ -1,0 +1,45 @@
+# PCE emulator makefile
+# Gilead Kutnick - Exophase
+
+# Global definitions
+AS        = /opt/miyoo/usr/bin/arm-linux-gcc
+CC        = /opt/miyoo/usr/bin/arm-linux-gcc
+STRIP     = /opt/miyoo/usr/bin/arm-linux-strip --strip-all --remove-section=.comment  --remove-section=.note
+
+OBJS      = main.o cpu.o cpu_arm_compatible.o memory.o irq.o io.o video.o timer.o psg.o disasm.o    \
+            screen.o event.o audio.o menu.o debug.o cd.o adpcm.o netplay.o     \
+            arcade_card.o bin_cue.o                                         \
+            SDL_main.o SDL_screen.o SDL_event.o SDL_menu.o SDL_audio.o crc32.o \
+			bitwise.o block.o codebook.o floor0.o floor1.o framing.o \
+			info.o mapping0.o mdct.o registry.o res012.o sharedbook.o \
+			synthesis.o vorbisfile.o window.o
+BIN       ?= temper
+
+# Platform specific definitions
+PKGS = sdl SDL_image zlib alsa
+PKG_CONFIG ?= /opt/miyoo/usr/bin/pkg-config
+PKGS_CFLAGS = $(shell $(PKG_CONFIG) --cflags $(PKGS))
+PKGS_LIBS = $(shell $(PKG_CONFIG) --libs $(PKGS))
+
+VPATH      += .. ../arm ../SDL ../linux ../tremor
+CFLAGS     += -DBITTBOY_BUILD -D_MIYOO_ -DARM_COMPAT -Ofast -march=armv5te -mtune=arm926ej-s -fno-PIC
+CFLAGS     += $(PKGS_CFLAGS)
+INCLUDES   = 
+LIBS       = $(PKGS_LIBS) -lbz2 -Wl,--as-needed -Wl,--gc-sections -s
+
+# Compilation:
+
+.SUFFIXES: .c .S
+
+%.o: %.c
+	${CC} ${CFLAGS} ${INCLUDES} -c -o $@ $< ${LIBS}
+
+%.o: %.S
+	${AS} ${CFLAGS} -c -o $@ $<
+
+all:	${OBJS}
+	${CC} ${OBJS} -o ${BIN} ${LIBS}
+	${STRIP} ${BIN}
+
+clean:
+	rm -f *.o ${BIN} 

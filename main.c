@@ -607,6 +607,13 @@ savestate_extension_enum load_state(char *file_name, u8 *in_memory_state,
   char path[MAX_PATH];
   sprintf(path, "%s%csave_states%c%s", config.main_path, DIR_SEPARATOR_CHAR,
    DIR_SEPARATOR_CHAR, file_name);
+  
+  FILE *f = fopen(path, "r");
+  if(f)
+    fclose(f);
+  else
+    return SS_EXT_INVALID;
+
   savestate_header_struct savestate_header;
   u8 *savestate_buffer = malloc(SAVESTATE_MAX_SIZE);
 

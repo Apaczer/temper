@@ -1500,7 +1500,10 @@ void select_exit_current_menu(menu_state_struct *menu_state,
     if(current_menu->focus_function)
       current_menu->focus_function(menu_state, current_menu, FOCUS_TYPE_ENTER);
     menu_state->current_menu = current_menu;
+    return;
   }
+
+  isrunning = 0;
 }
 
 
@@ -1885,6 +1888,9 @@ extern u32 game_width, game_height;
 
       case CURSOR_EXIT:
         select_exit_current_menu(&menu_state, current_menu_option);
+        break;
+      case CURSOR_BACK:
+        menu_state.exit_menu = 1;
         break;
 
       default:

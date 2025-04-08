@@ -1677,8 +1677,14 @@ menu_struct *create_menu_pad(menu_state_struct *menu_state,
     "           V", "          VI", "         Run", "      Select",
     "     Rapid I", "    Rapid II", "   Rapid III", "    Rapid IV",
     "     Rapid V", "    Rapid VI", "        Menu", "  Save state",
-    "  Load state", " Volume down", "   Volume up", "Fast forward",
-    "        None"
+    "  Load state",
+#ifndef NO_VOL_CTRL
+    " Volume down", "   Volume up",
+#else
+    "SS<-None->N0", "N0<-None->FF",
+#endif
+    "Fast forward",
+    "FF<-None->Up"
   };
 
   for(i = 0; i < platform_control_count; i++)

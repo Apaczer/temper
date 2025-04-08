@@ -6,7 +6,15 @@ AS        = /opt/miyoo/usr/bin/arm-linux-gcc
 CC        = /opt/miyoo/usr/bin/arm-linux-gcc
 STRIP     = /opt/miyoo/usr/bin/arm-linux-strip --strip-all --remove-section=.comment  --remove-section=.note
 
-OBJS      = main.o cpu.o cpu_arm_compatible.o memory.o irq.o io.o video.o timer.o psg.o disasm.o    \
+FAST_BUILD ?= 0 # 0 - compatible asm opt / 1 - fast assembly code
+
+OBJS      = main.o cpu.o
+ifeq ($(FAST_BUILD),1)
+OBJS      += cpu_arm_fast.o
+else
+OBJS      += cpu_arm_compatible.o
+endif
+OBJS      += memory.o irq.o io.o video.o timer.o psg.o disasm.o    \
             screen.o event.o audio.o menu.o debug.o cd.o adpcm.o netplay.o     \
             arcade_card.o bin_cue.o                                         \
             SDL_main.o SDL_screen.o SDL_event.o SDL_menu.o SDL_audio.o crc32.o \
@@ -22,7 +30,13 @@ PKGS_CFLAGS = $(shell $(PKG_CONFIG) --cflags $(PKGS))
 PKGS_LIBS = $(shell $(PKG_CONFIG) --libs $(PKGS))
 
 VPATH      += .. ../arm ../SDL ../linux ../tremor
-CFLAGS     += -DBITTBOY_BUILD -D_MIYOO_ -DARM_COMPAT -Ofast -march=armv5te -mtune=arm926ej-s -fno-PIC
+CFLAGS     += -DBITTBOY_BUILD -D_MIYOO_
+ifeq ($(FAST_BUILD),1)
+CFLAGS     += -DARM_FAST
+else
+CFLAGS     += -DARM_COMPAT
+endif
+CFLAGS     += -O2 -march=armv5te -mtune=arm926ej-s -fno-PIC
 CFLAGS     += $(PKGS_CFLAGS)
 INCLUDES   = 
 LIBS       = $(PKGS_LIBS) -lbz2 -Wl,--as-needed -Wl,--gc-sections -s

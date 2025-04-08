@@ -607,6 +607,14 @@ savestate_extension_enum load_state(char *file_name, u8 *in_memory_state,
   char path[MAX_PATH];
   sprintf(path, "%s%csave_states%c%s", config.main_path, DIR_SEPARATOR_CHAR,
    DIR_SEPARATOR_CHAR, file_name);
+  
+  file_read_open(state, path);
+  if(file_read_invalid(state))
+  {
+    printf("save state path %s does not exist\n", path);
+    return SS_EXT_INVALID;;
+  }
+  file_read_close(state);
   savestate_header_struct savestate_header;
   u8 *savestate_buffer = malloc(SAVESTATE_MAX_SIZE);
 

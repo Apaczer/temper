@@ -30,7 +30,7 @@ PKGS_CFLAGS = $(shell $(PKG_CONFIG) --cflags $(PKGS))
 PKGS_LIBS = $(shell $(PKG_CONFIG) --libs $(PKGS))
 
 VPATH      += .. ../arm ../SDL ../linux ../tremor
-CFLAGS     += -DBITTBOY_BUILD -D_MIYOO_ -DNO_VOL_CTRL
+CFLAGS     += -DBITTBOY_BUILD -D_MIYOO_ -DNO_VOL_CTRL -DNO_CUREXIT_QUIT
 ifeq ($(FAST_BUILD),1)
 CFLAGS     += -DARM_FAST
 else

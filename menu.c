@@ -1503,7 +1503,11 @@ void select_exit_current_menu(menu_state_struct *menu_state,
     return;
   }
 
+#ifndef NO_CUREXIT_QUIT
   isrunning = 0;
+#else
+  menu_state->exit_menu = 1;
+#endif
 }
 
 

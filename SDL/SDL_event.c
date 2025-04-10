@@ -393,8 +393,10 @@ gui_action_type key_map_gui_action(u32 key)
 
 #ifdef _MIYOO_
     case SDLK_ESCAPE:
+    case SDLK_RCTRL:
 #else
-    case SDLK_LALT:
+    case SDLK_LALT: // go back in file explorer
+    case SDLK_m: // or press MENU to back to game
 #endif
       return CURSOR_BACK;
 

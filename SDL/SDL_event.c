@@ -233,7 +233,9 @@ u32 update_input(event_input_struct *event_input)
           case SDLK_F7:
             event_input->config_button_action = CONFIG_BUTTON_LOAD_STATE;
             break;
-
+#ifdef _MIYOO_
+          case SDLK_RCTRL:
+#endif
           case SDLK_m:
             event_input->config_button_action = CONFIG_BUTTON_MENU;
             break;
@@ -272,9 +274,6 @@ u32 update_input(event_input_struct *event_input)
 			#ifdef _RG99_
 			case SDLK_PAGEUP:
 			#endif
-      #ifdef _MIYOO_
-			case SDLK_RCTRL:
-      #endif
 				event_input->action_type = INPUT_ACTION_TYPE_PRESS;
 				event_input->config_button_action = CONFIG_BUTTON_MENU;
 				return 1;

@@ -1610,8 +1610,10 @@ menu_struct *create_menu_options(menu_state_struct *menu_state,
   };
   static char *cd_card_labels[] = { "  v1", "  v2", "  v3", " acd", "gecd"  };
 
+#ifndef _MIYOO_
   add_menu_option(create_numeric_labeled(NULL, "Scale screen     ",
    current_line_number, &(config.scale_factor), 0, 4, scale_labels));
+#endif
   add_menu_option(create_numeric_labeled(NULL, "Show fps                ",
    current_line_number, &(config.show_fps), 0, 1, yes_no_labels));
   add_menu_option(create_numeric_labeled(NULL, "Enable sound            ",

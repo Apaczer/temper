@@ -1688,10 +1688,10 @@ menu_struct *create_menu_pad(menu_state_struct *menu_state,
 #ifndef NO_VOL_CTRL
     " Volume down", "   Volume up",
 #else
-    "SS<-None->N0", "N0<-None->FF",
+    " <No action ", "  No action>",
 #endif
     "Fast forward",
-    "FF<-None->Up"
+    " <No action>"
   };
 
   for(i = 0; i < platform_control_count; i++)

@@ -1,7 +1,6 @@
 *.o
 *.gcda
 *.elf
-*.txt
 *.pce
 SDL/opk/temper
 SDL/temper.opk

@@ -25,7 +25,7 @@ It is recommended to use latest toolchain (gcc-9.4.0)
 ```
 make -C SDL/ -f Makefile.miyoo
 ```
-for more optimization (less compatiblity) add `FAST_BUILD=1` flag to make
+for more optimization add `FAST_BUILD=1` flag to make
 
 - generate IPK package:
 ```
